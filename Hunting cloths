@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hunting Cloths | Elite Outdoor Gear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #e5e7eb; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .accent-green { color: #4ade80; }
+        .bg-hunting { background: linear-gradient(135deg, #14532d 0%, #064e3b 100%); }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-black tracking-widest accent-green">HUNTING CLOTHS</h1>
+        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+            <a href="#shop" class="hover:text-green-400">Shop</a>
+            <a href="#admin" class="text-white/30 hover:text-white">Seller Login</a>
+        </div>
+    </nav>
+
+    <header class="h-screen flex flex-col justify-center items-center text-center px-4 pt-20">
+        <div class="mb-6 inline-block px-4 py-1 rounded-full border border-green-500/30 text-green-400 text-xs font-bold uppercase tracking-widest">Available in Nepal</div>
+        <h2 class="text-6xl md:text-9xl font-black mb-4 tracking-tighter uppercase leading-none">Gear for the <br><span class="accent-green italic">Fearless</span></h2>
+        <p class="text-white/50 max-w-lg mx-auto text-sm md:text-base">Professional-grade hunting and trekking apparel engineered for the rugged Himalayas.</p>
+        <a href="#shop" class="mt-10 bg-hunting px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition">Explore Collection</a>
+    </header>
+
+    <section id="admin" class="max-w-6xl mx-auto px-6 mb-20">
+        <div class="glass p-8 rounded-[2rem] border-green-500/20">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold uppercase tracking-widest accent-green">Seller Dashboard</h3>
+                <span class="text-[10px] bg-white/10 px-2 py-1 rounded">Private Access</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <input type="text" id="pName" placeholder="Item Name" class="bg-white/5 p-4 rounded-2xl outline-none focus:ring-1 ring-green-500 text-sm">
+                <input type="text" id="pPrice" placeholder="Price (NPR)" class="bg-white/5 p-4 rounded-2xl outline-none focus:ring-1 ring-green-500 text-sm">
+                <input type="text" id="pImg" placeholder="Image URL (Upload to imgur first)" class="bg-white/5 p-4 rounded-2xl outline-none focus:ring-1 ring-green-500 text-sm">
+                <input type="text" id="pVars" placeholder="Variations (Red, Blue, XL)" class="bg-white/5 p-4 rounded-2xl outline-none focus:ring-1 ring-green-500 text-sm">
+            </div>
+            <button onclick="addProduct()" class="w-full mt-4 py-4 bg-white text-black font-black uppercase rounded-2xl hover:bg-green-400 transition">Update Storefront</button>
+        </div>
+    </section>
+
+    <section id="shop" class="max-w-7xl mx-auto px-6 pb-40">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h2 class="text-4xl font-black uppercase tracking-tight">Current Stock</h2>
+                <div class="h-1 w-20 bg-green-500 mt-2"></div>
+            </div>
+        </div>
+        
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            </div>
+    </section>
+
+    <script>
+        // Store Data
+        let store = [
+            { name: "Apex Stealth Jacket", price: "4,500", vars: ["Forest Camo", "Midnight"], img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800" },
+            { name: "Trek-Pro Cargo", price: "2,800", vars: ["Olive Drab", "Khaki"], img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800" }
+        ];
+
+        const whatsappNumber = "97798XXXXXXXX"; // CHANGE THIS TO YOUR NUMBER
+
+        function render() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            store.forEach((p, i) => {
+                grid.innerHTML += `
+                    <div class="group relative bg-zinc-900 rounded-[2.5rem] overflow-hidden border border-white/5 hover:border-green-500/30 transition-all duration-500">
+                        <div class="h-96 overflow-hidden">
+                            <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        </div>
+                        <div class="p-8">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold uppercase leading-tight">${p.name}</h3>
+                                <span class="accent-green font-black text-lg whitespace-nowrap">Rs. ${p.price}</span>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="text-[10px] uppercase font-bold text-white/40 block mb-2">Select Variation</label>
+                                <select class="w-full bg-black/50 p-3 rounded-xl text-xs border border-white/10 outline-none">
+                                    ${p.vars.map(v => `<option>${v}</option>`).join('')}
+                                </select>
+                            </div>
+
+                            <a href="https://wa.me/${whatsappNumber}?text=I want to order ${p.name} for Rs. ${p.price}" 
+                               class="block w-full text-center py-4 bg-hunting rounded-2xl font-bold uppercase tracking-widest text-sm hover:opacity-90 transition">
+                                Order on WhatsApp
+                            </a>
+                            <button onclick="remove(${i})" class="w-full text-[10px] mt-4 uppercase text-white/20 hover:text-red-500">Delete Listing</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const img = document.getElementById('pImg').value;
+            const vars = document.getElementById('pVars').value.split(',');
+
+            if(name && price) {
+                store.unshift({ name, price, img: img || 'https://via.placeholder.com/800', vars });
+                render();
+                // Clear inputs
+                ['pName', 'pPrice', 'pImg', 'pVars'].forEach(id => document.getElementById(id).value = '');
+            }
+        }
+
+        function remove(index) {
+            store.splice(index, 1);
+            render();
+        }
+
+        render();
+    </script>
+</body>
+</html>
